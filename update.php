@@ -22,7 +22,6 @@ if ($_POST) {
 
     if ($valid) {
         // Update data
-        // ...
     }
 } else {
     $pdo = Database::connect();
@@ -66,7 +65,7 @@ if ($_POST) {
                 <a class="btn btn-dark" href="index.php">Back</a>
             </div>
         </form>
-    </div> <!-- /container -->
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -63,7 +63,7 @@
                 </tbody>
             </table>
         </div>
-    </div> <!-- /container -->
+    </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"

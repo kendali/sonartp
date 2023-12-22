@@ -1,7 +1,6 @@
 <?php
 require 'database.php';
 
-$vari_able;
 
 if (!empty($_POST)) {
     $nameError = $emailError = $mobileError = null;
