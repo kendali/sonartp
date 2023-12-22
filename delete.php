@@ -1,22 +1,18 @@
 <?php
 require 'database.php';
+
 $id = !empty($_GET['id']) ? $_GET['id'] : 0;
 
 if (!empty($_POST['id'])) {
     $id = $_POST['id'];
-    try {
-        $pdo = Database::connect();
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "DELETE FROM your_table WHERE id = ?";
-        $q = $pdo->prepare($sql);
-        $q->execute([$id]);
-        Database::disconnect();
-        header("Location: index.php");
-    } catch (PDOException $e) {
-        
-    }
+    $pdo = Database::connect();
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql = "DELETE FROM your_table WHERE id = ?";
+    $q = $pdo->prepare($sql);
+    $q->execute([$id]);
+    Database::disconnect();
+    header("Location: index.php");
 }
-
 ?>
 
 <!doctype html>

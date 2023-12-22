@@ -1,5 +1,4 @@
 <?php
-
 class Database
 {
     private static $DB_NAME = 'crud_tutorial';
