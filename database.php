@@ -1,35 +1,47 @@
 <?php
 class Database
 {
-    private static $dbName = 'crud_tutorial';
-    private static $dbHost = 'localhost';
-    private static $dbPort = '3306';
-    private static $dbUsername = 'root';
-    private static $dbUserPassword = '';
+    private static $DB_NAME = 'crud_tutorial';
+    private static $DB_HOST = 'localhost';
+    private static $DB_PORT = '3306';
+    private static $DB_USERNAME = 'root';
+    private static $DB_PASSWORD = '';
 
-    private static $cont  = null;
+    private static $connection = null;
 
-    public function __construct()
+    private function __construct()
     {
-        $this->dbName = "default";
+        // Prevents instantiation
         die('Init function is not allowed');
     }
 
     public static function connect()
     {
-        // One connection through whole application
-        if (null == self::$cont) {
+        // One connection throughout the application
+        if (null == self::$connection) {
             try {
-                self::$cont =  new PDO("mysql:host=" . self::$dbHost . ";port=" . self::$dbPort . ";dbname=" . self::$dbName, self::$dbUsername, self::$dbUserPassword);
+                $options = [
+                    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::ATTR_EMULATE_PREPARES   => false,
+                ];
+
+                self::$connection = new PDO(
+                    "mysql:host=" . self::$DB_HOST . ";port=" . self::$DB_PORT . ";dbname=" . self::$DB_NAME,
+                    self::$DB_USERNAME,
+                    self::$DB_PASSWORD,
+                    $options
+                );
             } catch (PDOException $e) {
                 die($e->getMessage());
             }
         }
-        return self::$cont;
+        return self::$connection;
     }
 
     public static function disconnect()
     {
-        self::$cont = null;
+        self::$connection = null;
     }
 }
+?>
