@@ -1,7 +1,6 @@
 <?php
 
 require 'database.php';
-
 $id = null;
 if (!empty($_GET['id'])) {
     $id = $_REQUEST['id'];
@@ -10,17 +9,22 @@ if (!empty($_GET['id'])) {
 if (null == $id) {
     header("Location: index.php");
 } else {
-    $pdo = Database::connect();
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-    // Assuming your table name is 'customers', adjust the query accordingly
-    $sql = "SELECT * FROM your_table WHERE id = ?";
-    $q = $pdo->prepare($sql);
-    $q->execute(array($id));
-    $data = $q->fetch(PDO::FETCH_ASSOC);
-    
-    Database::disconnect();
+    try {
+        $pdo = Database::connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        // Assuming your table name is 'customers', adjust the query accordingly
+        $sql = "SELECT * FROM your_table WHERE id = ?";
+        $q = $pdo->prepare($sql);
+        $q->execute([$id]);
+        $data = $q->fetch(PDO::FETCH_ASSOC);
+        
+        Database::disconnect();
+    } catch (PDOException $e) {
+        
+    }
 }
+
 ?>
 
 <!DOCTYPE html>

@@ -1,7 +1,6 @@
 <?php
 require 'database.php';
 
-
 if (!empty($_POST)) {
     $nameError = $emailError = $mobileError = null;
     $name = $_POST['name'];
@@ -28,15 +27,20 @@ if (!empty($_POST)) {
     }
 
     if ($valid) {
-        $pdo = Database::connect();
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO customers (name, email, mobile) values(?, ?, ?)";
-        $q = $pdo->prepare($sql);
-        $q->execute([$name, $email, $mobile]);
-        Database::disconnect();
-        header("Location: index.php");
+        try {
+            $pdo = Database::connect();
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "INSERT INTO customers (name, email, mobile) VALUES (?, ?, ?)";
+            $q = $pdo->prepare($sql);
+            $q->execute([$name, $email, $mobile]);
+            Database::disconnect();
+            header("Location: index.php");
+        } catch (PDOException $e) {
+           
+        }
     }
 }
+
 ?>
 
 <!doctype html>

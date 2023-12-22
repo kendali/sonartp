@@ -1,6 +1,5 @@
 <?php
 require "database.php";
-
 $id = isset($_GET['id']) ? $_GET['id'] : null;
 
 if (!$id) {
@@ -24,15 +23,20 @@ if ($_POST) {
         // Update data
     }
 } else {
-    $pdo = Database::connect();
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT * FROM customers WHERE id = ?";
-    $q = $pdo->prepare($sql);
-    $q->execute([$id]);
-    $data = $q->fetch(PDO::FETCH_ASSOC);
-    list($name, $email, $mobile) = [$data['name'], $data['email'], $data['mobile']];
-    Database::disconnect();
+    try {
+        $pdo = Database::connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql = "SELECT * FROM customers WHERE id = ?";
+        $q = $pdo->prepare($sql);
+        $q->execute([$id]);
+        $data = $q->fetch(PDO::FETCH_ASSOC);
+        list($name, $email, $mobile) = [$data['name'], $data['email'], $data['mobile']];
+        Database::disconnect();
+    } catch (PDOException $e) {
+        
+    }
 }
+
 ?>
 
 <!doctype html>
